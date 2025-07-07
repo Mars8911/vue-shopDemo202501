@@ -1,5 +1,3 @@
 @import "bootstrap/scss/functions";
-@import "../helpers/variables";
-@import "bootstrap/scss/variables-dark"; // 正確引入 Bootstrap 的檔案
-@import "bootstrap/scss/variables";  // 如果需要覆蓋 bootstrap 變數可引入
+@import "../helpers/variables";  // 如果需要覆蓋 bootstrap 變數可引入
 @import "bootstrap/scss/mixins";
