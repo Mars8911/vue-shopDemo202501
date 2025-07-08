@@ -37,6 +37,12 @@ export default {
     methods:{
         addSubmit(){
             console.log('addSubmit');
+            const api = `${import.meta.env.VITE_APP_API}admin/signin`
+            this.$http.post(api,this.user)
+            .then((res)=>{
+                console.log(res);
+                
+            })
         }
     }
 };
