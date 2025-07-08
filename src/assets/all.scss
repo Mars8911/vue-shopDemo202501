@@ -1,0 +1,6 @@
+@import "bootstrap/scss/functions";
+@import "@/assets/helpers/_variables"; // 使用 @ 更清楚
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/bootstrap";   // ✅ 關鍵一行，請一定加上！
+
+

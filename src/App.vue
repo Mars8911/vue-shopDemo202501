@@ -9,7 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-<button type="button" class="btn btn-primary">222</button>
+      <button type="button" class="btn btn-primary">233322</button>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -21,6 +21,5 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style lang="scss">
-
-
+ @import "@/assets/all.scss";
 </style>
