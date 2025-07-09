@@ -7,13 +7,12 @@
                 <div class="mb-2">
                     <label for="inputEmail" class="sr-only">Email address</label>
                     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required
-                        autofocus  v-model="user.username" />
+                        autofocus v-model="user.username" />
                 </div>
                 <div class="mb-2">
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required  
-                    v-model="user.password"
-                    />
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required
+                        v-model="user.password" />
                 </div>
 
                 <div class="text-end mt-4">
@@ -34,15 +33,17 @@ export default {
             },
         }
     },
-    methods:{
-        addSubmit(){
-            console.log('addSubmit');
+    methods: {
+        addSubmit() {
             const api = `${import.meta.env.VITE_APP_API}admin/signin`
-            this.$http.post(api,this.user)
-            .then((res)=>{
-                console.log(res);
-                
-            })
+            this.$http.post(api, this.user)
+                .then((res) => {
+                    if (res.data.success) {
+                        const { token, expired } = res.data;
+                        document.cookie = `hexTokem=${token}; expires=${new Date(expired)}`
+                        this.$router.push('/dashboard')
+                    }
+                })
         }
     }
 };
