@@ -1,6 +1,12 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+    <div class="text-end">
+      <button type="button" class="btn btn-info"
+      @click="$refs.getModel.showModel"
+      >新增商品</button>
+    </div>
+
     <table class="table mt-4">
         <thead>
             <tr>
@@ -35,16 +41,21 @@
             </tr>
         </tbody>
     </table>
+    <ProductModel ref="getModel"></ProductModel>
 </template>
 
 
 <script>
+import ProductModel from '@/components/ProductModel.vue'
 export default {
     data() {
         return {
             products: [],
             pagination: {}
         }
+    },
+    components:{
+        ProductModel,
     },
     methods: {
         getProduct() {
