@@ -1,7 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <Navbar> </Navbar>
-    <RouterView />
+    <div class="container-fluid">
+        <Navbar> </Navbar>
+        <RouterView />
+    </div>
+
 </template>
 
 <script>

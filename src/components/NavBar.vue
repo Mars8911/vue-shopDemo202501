@@ -30,7 +30,6 @@
 export default {
     methods: {
         logout() {
-            console.log('登出');
             const api = `${import.meta.env.VITE_APP_API}logout`
             this.$http.post(api, this.user)
                 .then((res) => {
