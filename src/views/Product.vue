@@ -2,9 +2,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="text-end">
-      <button type="button" class="btn btn-info"
-      @click="$refs.getModel.showModel"
-      >新增商品</button>
+        <button type="button" class="btn btn-info"
+         @click="openModal">新增商品</button>
     </div>
 
     <table class="table mt-4">
@@ -26,7 +25,7 @@
                     {{ item.origin_price }}
                 </td>
                 <td class="text-right">
-                   {{ item.price }}
+                    {{ item.price }}
                 </td>
                 <td>
                     <span class="text-success" v-if="item.is_enabled">啟用</span>
@@ -41,20 +40,22 @@
             </tr>
         </tbody>
     </table>
-    <ProductModel ref="getModel"></ProductModel>
+    <ProductModel ref="productModal" :product="tempProduct"></ProductModel>
 </template>
 
 
 <script>
 import ProductModel from '@/components/ProductModel.vue'
 export default {
+    name: 'ProductView',
     data() {
         return {
             products: [],
-            pagination: {}
+            pagination: {},
+             tempProduct: {}
         }
     },
-    components:{
+    components: {
         ProductModel,
     },
     methods: {
@@ -63,14 +64,30 @@ export default {
             this.$http.get(api)
                 .then((res) => {
                     if (res.data.success) {
-                        console.log('產品資料',res.data);
+                        console.log('產品資料', res.data);
                         this.products = res.data.products;
-                        this.pagination =  res.data.pagination;
+                        this.pagination = res.data.pagination;
                     }
                 })
+        },
+        openModal() {
+            this.tempProduct = {};
+            const productComponent = this.$refs.productModal;
+            productComponent.showModal();
+        },
+
+        updateProduct(item) {
+            this.tempProduct = item;
+            const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`;
+            const productComponent = this.$refs.productModal;
+            this.$http.post(api, { data: this.tempProduct }).then((response) => {
+                console.log(response);
+                productComponent.hideModal();
+                this.getProducts();
+            });
         }
     },
-    created(){
+    created() {
         this.getProduct()
     }
 

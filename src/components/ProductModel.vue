@@ -1,7 +1,13 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        ref="model">
+    <div 
+    class="modal fade" 
+    id="exampleModal" 
+    tabindex="-1" 
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    ref="modal"
+    >
       <!-- 請同學自行新增 v-model -->
 <div class="modal-dialog modal-xl" role="document">
   <div class="modal-content border-0">
@@ -10,7 +16,7 @@
         <span>新增產品</span>
       </h5>
       <button type="button" class="btn-close"
-              data-bs-dismiss="modal" aria-label="Close"></button>
+         data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
       <div class="row">
@@ -115,26 +121,40 @@
 
 
 <script>
-import Model from 'bootstrap/js/dist/modal'
+import Modal from 'bootstrap/js/dist/modal'
 export default {
     data() {
         return {
-            model: {}
+            modal: {},
+           tempProduct: {}
+        }
+    },
+      props: {
+        product: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    },
+    watch:{
+        product() {
+            this.tempProduct = this.product; // 只要product有更動 就觸發
         }
     },
     methods: {
-        showModel() {
+        showModal() {
             this.modal.show();
         },
 
-        hideModel() {
+        hideModal() {
             this.modal.hide();
         }
 
     },
     mounted() {
-        this.modal = new Model(this.$refs.model)
-        this.hideModel()
+        this.modal = new Modal(this.$refs.modal)
+        this.hideModal()
     }
 }
 </script>
