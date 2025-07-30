@@ -20,7 +20,7 @@
         <tbody>
             <tr v-for="item in products" key="item.id">
                 <td>{{ item.category }}</td>
-                <td>>{{ item.title }}</td>
+                <td>{{ item.title }}</td>
                 <td class="text-right">
                     {{ item.origin_price }}
                 </td>
@@ -40,7 +40,11 @@
             </tr>
         </tbody>
     </table>
-    <ProductModel ref="productModal" :product="tempProduct"></ProductModel>
+    <!-- 元件接收 $emit -->
+    <ProductModel ref="productModal" :product="tempProduct"
+    
+        @update-product="updateProduct"
+    ></ProductModel>
 </template>
 
 
@@ -52,7 +56,7 @@ export default {
         return {
             products: [],
             pagination: {},
-             tempProduct: {}
+            tempProduct: {}
         }
     },
     components: {
@@ -77,13 +81,14 @@ export default {
         },
 
         updateProduct(item) {
+            // console.log('更新產品', item); 
             this.tempProduct = item;
             const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`;
             const productComponent = this.$refs.productModal;
             this.$http.post(api, { data: this.tempProduct }).then((response) => {
                 console.log(response);
                 productComponent.hideModal();
-                this.getProducts();
+                this.getProduct();
             });
         }
     },
