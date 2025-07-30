@@ -24,7 +24,9 @@
           <div class="mb-3">
             <label for="image" class="form-label">輸入圖片網址</label>
             <input type="text" class="form-control" id="image"
-                    placeholder="請輸入圖片連結">
+                    placeholder="請輸入圖片連結"
+                    v-model="tempProduct.imageUrl">
+                    >
           </div>
           <div class="mb-3">
             <label for="customFile" class="form-label">或 上傳圖片
@@ -86,12 +88,16 @@
           <div class="mb-3">
             <label for="description" class="form-label">產品描述</label>
             <textarea type="text" class="form-control" id="description"
-                      placeholder="請輸入產品描述"></textarea>
+                      placeholder="請輸入產品描述"
+                      v-model="tempProduct.description"
+                      ></textarea>
           </div>
           <div class="mb-3">
             <label for="content" class="form-label">說明內容</label>
             <textarea type="text" class="form-control" id="content"
-                      placeholder="請輸入產品說明內容"></textarea>
+                      placeholder="請輸入產品說明內容"
+                      v-model="tempProduct.content"
+                      ></textarea>
           </div>
           <div class="mb-3">
             <div class="form-check">
@@ -99,7 +105,8 @@
                       :true-value="1"
                       :false-value="0"
                       id="is_enabled">
-              <label class="form-check-label" for="is_enabled">
+              <label class="form-check-label" for="is_enabled" 
+              >
                 是否啟用
               </label>
             </div>
@@ -114,6 +121,7 @@
       <button type="button" class="btn btn-primary"
     
       @click="$emit('update-product', tempProduct)"
+
       >確認</button>
     </div>
   </div>

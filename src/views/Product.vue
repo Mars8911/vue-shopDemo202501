@@ -3,7 +3,7 @@
 <template>
     <div class="text-end">
         <button type="button" class="btn btn-info"
-         @click="openModal">新增商品</button>
+         @click="openModal(true)">新增商品</button>
     </div>
 
     <table class="table mt-4">
@@ -33,7 +33,9 @@
                 </td>
                 <td>
                     <div class="btn-group">
-                        <button class="btn btn-outline-primary btn-sm">編輯</button>
+                        <button class="btn btn-outline-primary btn-sm"
+                        @click="openModal(false, item)"
+                        >編輯</button>
                         <button class="btn btn-outline-danger btn-sm">刪除</button>
                     </div>
                 </td>
@@ -42,7 +44,6 @@
     </table>
     <!-- 元件接收 $emit -->
     <ProductModel ref="productModal" :product="tempProduct"
-    
         @update-product="updateProduct"
     ></ProductModel>
 </template>
@@ -56,7 +57,8 @@ export default {
         return {
             products: [],
             pagination: {},
-            tempProduct: {}
+            tempProduct: {},
+            isNew : false
         }
     },
     components: {
@@ -74,8 +76,14 @@ export default {
                     }
                 })
         },
-        openModal() {
-            this.tempProduct = {};
+        openModal(isNew,item) {
+            // console.log('開啟Modal', isNew, item);
+            if(isNew) {
+                this.tempProduct = {};
+            } else {
+                this.tempProduct = { ...item };
+            }
+            this.isNew = isNew;
             const productComponent = this.$refs.productModal;
             productComponent.showModal();
         },
@@ -83,9 +91,19 @@ export default {
         updateProduct(item) {
             // console.log('更新產品', item); 
             this.tempProduct = item;
-            const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`;
+            let api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`;
+            let httpMethod = 'post';
+
+            // 如果是編輯狀態
+            if (!this.isNew) {
+            api = `${import.meta.env.VITE_APP_API}api/${import.
+            meta.env.VITE_APP_PATH}/admin/product/${item.id}`;
+                httpMethod = 'put';
+        
+            }
+
             const productComponent = this.$refs.productModal;
-            this.$http.post(api, { data: this.tempProduct }).then((response) => {
+            this.$http[httpMethod](api, { data: this.tempProduct }).then((response) => {
                 console.log(response);
                 productComponent.hideModal();
                 this.getProduct();
